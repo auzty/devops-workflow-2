@@ -26,8 +26,8 @@ jobs:
       - name: checkout another repo 
         uses: actions/checkout@v3
         with:
-          repository: "auzty/devops-workflow"
+          repository: "auzty/devops-worklow"
           token: ${{secrets.mytoken}}
           path: devops-workflow
       - name: run other workflow
-        uses: auzty/devops-workflow/callmefromothers.yml@main
+        uses: auzty/devops-worklow/callmefromothers.yml@main
