@@ -45,6 +45,6 @@ jobs:
     needs: [deploystage]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     with:
-      shared-env: ${{needs.deploystage.outputs.shared-env}}
+      sharing-env: ${{needs.deploystage.outputs.shared-env}}
     secrets:
       ACCESS_TOKEN_KU: ${{secrets.MYTOKEN}}
