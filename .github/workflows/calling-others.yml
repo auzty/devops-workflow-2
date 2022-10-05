@@ -46,6 +46,9 @@ jobs:
         run: |
           echo "::set-output name=shared-env::${{ env.ACCOUNTNAME }}"
 
+      - name: test the shared
+        run: echo "this is env ======== ${{ needs.set-env-variables.outputs.shared-env }}"
+
   runothers:
     needs: [set-env-variables]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
