@@ -11,6 +11,8 @@ on:
         options:
         - staging
         - prod
+      shared-env:
+        required: false
     secrets:
       MYTOKEN:
         required: true
