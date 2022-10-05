@@ -23,6 +23,8 @@ env:
 jobs:
   set-env-variables:
     runs-on: ubuntu-latest
+    outputs:
+      shared-accname: ${{ steps.set-env-for-accname.outputs.acc-name }}
     steps:
       - uses: actions/checkout@v3
 
@@ -37,29 +39,35 @@ jobs:
         shell: bash
         run: |
           echo "this is the account : ${{ env.ACCOUNTNAME }}"
-
-  deploystage:
-    runs-on: ubuntu-latest
-    outputs:
-      shared-env: ${{ steps.set-env-to-others.outputs.shared-env}}
-    steps:
-      - name: fisrt check env on main yaml
-        run: echo "this is called on main yaml ->>>>> ${{env.TESTINGENV}}"
-      - name: checkout another repo 
-        uses: actions/checkout@v3
-        with:
-          repository: "auzty/devops-worklow"
-          token: ${{secrets.MYTOKEN}}
-          path: devops-workflow
-      - name: init the env from first yaml
-        id: set-env-to-others
+      
+      - name: set the output
+        shell: bash
+        id: set-env-for-accname
         run: |
-          echo "::set-output name=shared-env::${{env.TESTINGENV}}"
+          echo "::set-output name=acc-name::${{ env.ACCOUNTNAME }}"
+
+#  deploystage:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      shared-env: ${{ steps.set-env-to-others.outputs.shared-env}}
+#    steps:
+#      - name: fisrt check env on main yaml
+#        run: echo "this is called on main yaml ->>>>> ${{env.TESTINGENV}}"
+#      - name: checkout another repo 
+#        uses: actions/checkout@v3
+#        with:
+#          repository: "auzty/devops-worklow"
+#          token: ${{secrets.MYTOKEN}}
+#          path: devops-workflow
+#      - name: init the env from first yaml
+#        id: set-env-to-others
+#        run: |
+#          echo "::set-output name=shared-env::${{env.TESTINGENV}}"
         
   runothers:
-    needs: [deploystage]
+    needs: [set-env-variables]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     with:
-      shared-env: ${{needs.deploystage.outputs.shared-env}}
+      shared-env: ${{needs.set-env-variables.outputs.shared-accname}}
     secrets:
       ACCESS_TOKEN_KU: ${{secrets.MYTOKEN}}
