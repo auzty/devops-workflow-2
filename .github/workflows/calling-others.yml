@@ -13,42 +13,33 @@ on:
           - acctest2
           - acctest3
           - defaultacc
-    secrets:
-      MYTOKEN:
-        required: true
-
-env:
-  TESTINGENV: "heheh ini env test"
 
 jobs:
   set-env-variables:
     runs-on: ubuntu-latest
     outputs:
-      shared-env: ${{ steps.set-env-for-accname.outputs.shared-env }}
+      shared-accname: ${{ steps.set-env-for-accname.outputs.accname }}
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup Variable from Shell
         shell: bash
         run: |
-          pwd
-          ls -lah
           ./scripts/variables.sh ${{ github.event.inputs.stackname }}
-
-      - name: set the output
-        shell: bash
-        id: set-env-for-accname
-        run: |
-          echo "::set-output name=shared-env::${{ env.ACCOUNTNAME }}"
 
       - name: test the choice
         shell: bash
         run: |
           echo "this is the account : ${{ env.ACCOUNTNAME }}"
       
+      - name: set the output
+        shell: bash
+        id: set-env-for-accname
+        run: |
+          echo "::set-output name=accname::${{ env.ACCOUNTNAME }}"
 
   runothers:
     needs: [set-env-variables]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     with:
-      shared-env: ${{needs.set-env-variables.outputs.shared-env}}
+      shared-accname: ${{needs.set-env-variables.outputs.shared-accname}}
