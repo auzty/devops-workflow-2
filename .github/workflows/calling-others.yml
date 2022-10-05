@@ -1,12 +1,16 @@
 name: running other workflow file
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
-      # tag to be added to the image
-      tag:
-        required: false
-        type: string
+      deployType:
+        description: 'Deploying Manual'
+        required: true
+        default: 'staging' 
+        type: choice
+        options:
+        - staging
+        - prod
     secrets:
       mytoken:
         required: true
