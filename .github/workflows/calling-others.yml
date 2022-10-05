@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Setup Variable from Shell
         shell: bash
-        run: ./variable.sh ${{ github.event.inputs.stackname }}
+        run: ./scripts/variable.sh ${{ github.event.inputs.stackname }}
 
       - name: test the choice
         shell: bash
