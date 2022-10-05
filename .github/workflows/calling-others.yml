@@ -13,6 +13,8 @@ on:
           - acctest2
           - acctest3
           - defaultacc
+      shared-env:
+        required: false
     secrets:
       MYTOKEN:
         required: true
