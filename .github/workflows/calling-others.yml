@@ -24,9 +24,14 @@ jobs:
   set-env-variables:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Setup Variable from Shell
         shell: bash
-        run: ./scripts/variable.sh ${{ github.event.inputs.stackname }}
+        run: |
+          pwd
+          ls -lah
+          ./scripts/variables.sh ${{ github.event.inputs.stackname }}
 
       - name: test the choice
         shell: bash
