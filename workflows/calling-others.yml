@@ -1,0 +1,29 @@
+name: running other workflow file
+
+on:
+  workflow_call:
+    inputs:
+      # tag to be added to the image
+      tag:
+        required: false
+        type: string
+    secrets:
+      mytoken:
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploystage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout another repo 
+        uses: actions/checkout@v3
+        with:
+          repository: "auzty/devops-workflow"
+          token: ${{secrets.mytoken}}
+          path: devops-workflow
+      - name: run other workflow
+        uses: auzty/devops-workflow/callmefromothers.yml@main
