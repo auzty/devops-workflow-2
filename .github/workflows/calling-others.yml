@@ -3,16 +3,16 @@ name: running other workflow file
 on:
   workflow_dispatch:
     inputs:
-      deployType:
-        description: 'Deploying Manual'
+      stackname:
+        description: Select stack
+        default: defaultacc
         required: true
-        default: 'staging' 
         type: choice
         options:
-        - staging
-        - prod
-      shared-env:
-        required: false
+          - acctest1
+          - acctest2
+          - acctest3
+          - defaultacc
     secrets:
       MYTOKEN:
         required: true
@@ -20,11 +20,19 @@ on:
 env:
   TESTINGENV: "heheh ini env test"
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
+  set-env-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Variable from Shell
+        shell: bash
+        run: ./variable.sh ${{ github.event.inputs.stackname }}
+
+      - name: test the choice
+        shell: bash
+        run: |
+          echo "this is the account : ${{ env.ACCOUNTNAME }}"
+
   deploystage:
     runs-on: ubuntu-latest
     outputs:
