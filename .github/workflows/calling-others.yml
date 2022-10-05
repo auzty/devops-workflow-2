@@ -29,5 +29,5 @@ jobs:
           repository: "auzty/devops-worklow"
           token: ${{secrets.mytoken}}
           path: devops-workflow
-      - name: run other workflow
-        uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
+  runothers:
+    uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
