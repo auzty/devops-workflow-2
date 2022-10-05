@@ -32,4 +32,4 @@ jobs:
   runothers:
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     secrets:
-      GITHUB_TOKEN: ${{secrets.MYTOKEN}}
+      mytoken: ${{secrets.MYTOKEN}}
