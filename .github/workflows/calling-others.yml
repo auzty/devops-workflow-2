@@ -12,7 +12,7 @@ on:
         - staging
         - prod
     secrets:
-      mytoken:
+      MYTOKEN:
         required: true
 
 permissions:
@@ -27,8 +27,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: "auzty/devops-worklow"
-          token: ${{secrets.mytoken}}
+          token: ${{secrets.MYTOKEN}}
           path: devops-workflow
   runothers:
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
-    token: %{{secrets.mytoken}}
+    secrets:
+      GITHUB_TOKEN: ${{secrets.MYTOKEN}}
