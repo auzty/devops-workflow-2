@@ -31,3 +31,4 @@ jobs:
           path: devops-workflow
   runothers:
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
+    token: %{{secrets.mytoken}}
