@@ -25,6 +25,8 @@ permissions:
 jobs:
   deploystage:
     runs-on: ubuntu-latest
+    outputs:
+      sharing-env: ${{ steps.set-env-to-others.outputs.shared-env}}
     steps:
       - name: fisrt check env on main yaml
         run: echo "this is called on main yaml ->>>>> ${{env.TESTINGENV}}"
@@ -34,7 +36,15 @@ jobs:
           repository: "auzty/devops-worklow"
           token: ${{secrets.MYTOKEN}}
           path: devops-workflow
+      - name: init the env from first yaml
+        id: set-env-to-others
+        run: |
+          echo "::set-output name=shared-env::${{env.TESTINGENV}}"
+        
   runothers:
+    needs: [deploystage]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
+    with:
+      shared-env: ${{needs.deploystage.outputs.shared-env}}
     secrets:
       ACCESS_TOKEN_KU: ${{secrets.MYTOKEN}}
