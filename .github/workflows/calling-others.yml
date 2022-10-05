@@ -24,7 +24,7 @@ jobs:
   set-env-variables:
     runs-on: ubuntu-latest
     outputs:
-      shared-env: ${{ steps.set-env-for-accname.outputs.acc-name }}
+      shared-env: ${{ steps.set-env-for-accname.outputs.shared-env }}
     steps:
       - uses: actions/checkout@v3
 
@@ -50,4 +50,4 @@ jobs:
     needs: [set-env-variables]
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     with:
-      shared-env: ${{needs.set-env-variables.outputs.shared-accname}}
+      shared-env: ${{needs.set-env-variables.outputs.shared-env}}
