@@ -43,4 +43,4 @@ jobs:
     uses: auzty/devops-worklow/.github/workflows/callmefromothers.yml@main
     with:
       shared-accname: ${{needs.set-env-variables.outputs.shared-accname}}
-      mytoken: ${{secrets.mytoken}}
+      mytoken: ${{ secrets.MYTOKEN }}
