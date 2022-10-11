@@ -40,18 +40,18 @@ jobs:
 
   runpy:
     runs-on: ubuntu-latest
-      steps:
-        - name: checkout another repo 
-          uses: actions/checkout@v3
-          with:
-            repository: "auzty/hello-world"
-            token: ${{secrets.MYTOKEN}}
-            ref: "jajalbranch"
-            path: hello-world
-        - name: listing file
-          run: ls -lah hello-world
-        - name: run python  script
-          run: python hello-world/py/justrun.py
+    steps:
+      - name: checkout another repo 
+        uses: actions/checkout@v3
+        with:
+          repository: "auzty/hello-world"
+          token: ${{secrets.MYTOKEN}}
+          ref: "jajalbranch"
+          path: hello-world
+      - name: listing file
+        run: ls -lah hello-world
+      - name: run python  script
+        run: python hello-world/py/justrun.py
 
   runothers:
     needs: [set-env-variables]
