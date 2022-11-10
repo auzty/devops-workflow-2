@@ -1,0 +1,34 @@
+name: running other workflow file
+
+on:
+  push:
+    branches:
+      - "testenv"
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      stackname:
+#        description: Select stack
+#        default: defaultacc
+#        required: true
+#        type: choice
+#        options:
+#          - acctest1
+#          - acctest2
+#          - acctest3
+#          - defaultacc
+
+jobs:
+  set-env-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Variable from Shell
+        uses: cardinalby/export-env-action@v1
+        with:
+          envFile: 'myenv.env'    
+          expand: 'true'
+
+      - name: testing the env
+        run: env
