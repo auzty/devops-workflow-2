@@ -1,5 +1,4 @@
-name: running other workflow file
-
+name:  testing env
 #on:
 #  push:
 #    branches:
@@ -13,10 +12,8 @@ on:
         required: true
         type: choice
         options:
-          - acctest1
-          - acctest2
-          - acctest3
-          - defaultacc
+          - DEV10
+          - DEV11
 
 jobs:
   set-env-variables:
@@ -35,4 +32,4 @@ jobs:
         run: echo ${{ steps.settingenv.outputs}}
 
       - name: testing the env
-        run: echo '$${{github.event.inputs.stackname}}'
+        run: echo $${{github.event.inputs.stackname}}_REGION
