@@ -35,7 +35,13 @@ jobs:
         run: |
           echo "${{fromJson(env.JSON_RESPONSE)}}"
 
-      - name: selecting correct env
-        run: echo "${{ fromJson(env.JSON_RESPONSE).Dev10 }}"
+      - name: selecting env using jq
+        uses: sergeysova/jq-action@v2
+        id: selectedjson
+        with:
+          cmd: 'jq .${{ github.event.inputs.stackname }}'
+
+      - name: testing the results
+        run:  echo ${{ fromJson(steps.selectedjson.output) }}
 #      - name: testing the env
 #        run: echo $${{github.event.inputs.stackname}}_REGION
