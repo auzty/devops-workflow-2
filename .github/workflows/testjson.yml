@@ -48,4 +48,4 @@ jobs:
 #      - name: testing the env
 #        run: echo $${{github.event.inputs.stackname}}_REGION
       - name: get value from selected
-        run: echo {{ fromJSON(steps.selectedkey.output).region }}
+        run: echo ${{ fromJSON(steps.selectedkey.output).region }}
