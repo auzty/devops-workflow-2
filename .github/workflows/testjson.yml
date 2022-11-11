@@ -24,16 +24,12 @@ jobs:
       - name: testlisting
         run: ls -lah
 
-      - name: Setup Variable from json file
-        id: set_json
+      - name: Set the value in bash
+        id: step_one
         run: |
           echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-          cat myjson.json >> $GITHUB_ENV
+          curl https://jsonplaceholder.typicode.com/todos/1 >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
-
-      - name: listing
-        run: |
-          echo "${{fromJson(env.MYJSON)}} | jq"
 
 #      - name: testing the env
 #        run: echo $${{github.event.inputs.stackname}}_REGION
