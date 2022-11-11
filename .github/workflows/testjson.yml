@@ -1,0 +1,40 @@
+name:  testing json
+#on:
+#  push:
+#    branches:
+#      - "testenv"
+on:
+  workflow_dispatch:
+    inputs:
+      stackname:
+        description: Select stack
+        default: defaultacc
+        required: true
+        type: choice
+        options:
+          - DEV10
+          - DEV11
+
+jobs:
+  set-env-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Variable from json file
+        id: set_json
+        run: |
+          content=`cat ./path/to/package.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=configJson::$content"
+
+      - name: listing
+        run: |
+          echo "${{fromJson(steps.set_json.outputs.configJson)}}"
+
+#      - name: testing the env
+#        run: echo $${{github.event.inputs.stackname}}_REGION
