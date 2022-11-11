@@ -40,12 +40,14 @@ jobs:
 #        id: selectedjson
 #        with:
 #          cmd: 'jq .${{ github.event.inputs.stackname }} myjson.json -r'
-      - name: testing jq
-        id: selectedkey
-        run: cat myjson.json | jq .${{ github.event.inputs.stackname }}
+      - name: get selected key with jq and set as env
+        run: |
+          echo 'JSON_RESULT<<EOF' >> $GITHUB_ENV
+          cat myjson.json | jq .${{ github.event.inputs.stackname }}
+          echo 'EOF' >> $GITHUB_ENV
 #      - name: testing the results
 #        run:  echo ${{ fromJson(steps.selectedjson.output) }}
 #      - name: testing the env
 #        run: echo $${{github.event.inputs.stackname}}_REGION
       - name: get value from selected
-        run: echo ${{ steps.selectedkey.output }}
+        run: echo ${{ fromJSON(env.JSON_RESULT).region }}
