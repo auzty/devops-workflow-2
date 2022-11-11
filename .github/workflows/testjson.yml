@@ -27,7 +27,7 @@ jobs:
       - name: Setup Variable from json file
         id: set_json
         run: |
-          echo 'MYJSON<<EOF' >> $GITHUB_ENV
+          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
           cat myjson.json >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
