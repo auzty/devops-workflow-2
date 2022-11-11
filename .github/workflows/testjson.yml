@@ -43,7 +43,7 @@ jobs:
       - name: get selected key with jq and set as env
         run: |
           echo 'JSON_RESULT<<EOF' >> $GITHUB_ENV
-          cat myjson.json | jq .${{ github.event.inputs.stackname }}
+          cat myjson.json | jq .${{ github.event.inputs.stackname }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 #      - name: testing the results
 #        run:  echo ${{ fromJson(steps.selectedjson.output) }}
