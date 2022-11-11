@@ -39,7 +39,7 @@ jobs:
         uses: sergeysova/jq-action@v2
         id: selectedjson
         with:
-          cmd: 'jq .${{ github.event.inputs.stackname }}'
+          cmd: 'jq .${{ github.event.inputs.stackname }} myjson.json -r'
 
       - name: testing the results
         run:  echo ${{ fromJson(steps.selectedjson.output) }}
