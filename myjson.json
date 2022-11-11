@@ -1,5 +1,5 @@
 {
-  "Dev10": {
+  "DEV10": {
     "region": "us-west-2",
     "accountname": "cds-devten",
     "envtier": "devten",
@@ -7,7 +7,7 @@
     "ecrhosturl": "10000000.amazonaws.com",
     "deploymentgrp": "cdsten"
   },
-  "Dev11": {
+  "DEV11": {
     "region": "us-west-2",
     "accountname": "cds-develeven",
     "envtier": "develeven",
