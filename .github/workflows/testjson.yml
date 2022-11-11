@@ -28,7 +28,7 @@ jobs:
         id: step_one
         run: |
           echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-          curl https://jsonplaceholder.typicode.com/todos/1 >> $GITHUB_ENV
+          cat myjson.json >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
 #      - name: testing the env
