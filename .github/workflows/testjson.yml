@@ -41,8 +41,11 @@ jobs:
 #        with:
 #          cmd: 'jq .${{ github.event.inputs.stackname }} myjson.json -r'
       - name: testing jq
+        id: selectedkey
         run: cat myjson.json | jq .${{ github.event.inputs.stackname }}
 #      - name: testing the results
 #        run:  echo ${{ fromJson(steps.selectedjson.output) }}
 #      - name: testing the env
 #        run: echo $${{github.event.inputs.stackname}}_REGION
+      - name: get value from selected
+        run: echo {{ fromJSON(steps.selectedkey.output).region }}
