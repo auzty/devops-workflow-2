@@ -11,17 +11,22 @@ on:
           - DEV10
           - DEV11
 jobs:
-  example-job:
+  define-service:
     runs-on: ubuntu-latest
-    steps:
-      - name: Start LocalStack
+    services:
+      run-localstack:
+        image: localstack/localstack
         env:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+        # Set health checks to wait until postgres has started
+        ports:
+           - 4566:4566
+           - 4510-4559:4510-4559
+           
+    steps:
+      - name: Start LocalStack
         run: |
-          pip install localstack awscli-local[ver1] # install LocalStack cli and awslocal
-          docker pull localstack/localstack         # Make sure to pull the latest version of the image
-          localstack start -d                       # Start LocalStack in the background
-          
+          pip install awscli-local[ver1] # install LocalStack cli and awslocal          
           echo "Waiting for LocalStack startup..."  # Wait 30 seconds for the LocalStack container
           localstack wait -t 30                     # to become ready before timing out 
           echo "Startup complete"          
