@@ -16,8 +16,6 @@ jobs:
     services:
       run-localstack:
         image: localstack/localstack
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
         # Set health checks to wait until postgres has started
         ports:
            - 4566:4566
@@ -28,7 +26,7 @@ jobs:
         run: |
           pip install awscli-local[ver1] # install LocalStack cli and awslocal          
           echo "Waiting for LocalStack startup..."  # Wait 30 seconds for the LocalStack container
-          #localstack wait -t 30                     # to become ready before timing out 
+          localstack wait -t 30                     # to become ready before timing out 
           echo "Startup complete"          
       - name: Run some Tests against LocalStack
         run: |
