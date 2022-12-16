@@ -32,4 +32,11 @@ jobs:
         run: |
           awslocal s3 mb s3://test
           awslocal s3 ls
-          echo "Test Execution complete!"
+          echo "Test S3 Bucket Execution complete!"
+          
+      - name: test SQS against localstack
+        run: |
+          awslocal sqs create-queue --queue-name sample-queue
+          awslocal sqs list-queues
+          awslocal sqs send-message --queue-url http://localhost:4566/00000000000/sample-queue --message-body test
+          echo "Sending queue completed!"
