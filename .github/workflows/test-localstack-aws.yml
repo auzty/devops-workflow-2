@@ -22,7 +22,11 @@ jobs:
            - 4510-4559:4510-4559
            
     steps:           
-      - uses: chrislennon/action-aws-cli@v1.1
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+        
       - name: test Dynamodb against localstack
         run: |
           aws --endpoint-url=http://localhost:4566 dynamodb create-table --table-name jajal --attribute-definitions AttributeName=Nama,AttributeType=S --key-schema AttributeName=Nama,KeyType=HASH --provisioned-throughput ReadCapacityUnits=10,WriteCapacityUnits=55
