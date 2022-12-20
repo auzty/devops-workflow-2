@@ -1,0 +1,34 @@
+name: call other with params
+
+on:
+  workflow_dispatch:
+    inputs:
+      build-type:
+        description: 'build-type'
+        required: true
+        default: 'notbuild'
+        type: choice
+        options:
+          - 'build'
+          - 'buildAndDeploy'
+          - 'notbuild'
+
+
+jobs:
+  set-output-from-input:
+    runs-on: ubuntu-latest
+    outputs:
+      typeBuild: ${{ steps.set-output-to-nextwf.outputs.buildtype }}
+    steps:
+      
+      - name: set the output
+        shell: bash
+        id: set-output-to-nextwf
+        run: |
+          echo "buildtype=${{github.event.inputs.build-type}}" >> $GITHUB_OUTPUT
+
+  runothers:
+    needs: [set-output-from-input]
+    uses: auzty/devops-worklow/.github/workflows/call-me-with-input.yml@main
+    with:
+      build-type: ${{needs.set-output-from-input.outputs.typeBuild}}
